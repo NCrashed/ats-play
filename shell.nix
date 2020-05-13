@@ -1,9 +1,15 @@
 # Latest Nightly
-let pkgs = import ./pkgs.nix {};
+let pkgs = import ./pkgs.nix {
+    config = {
+      packageOverrides = pkgs: with pkgs; {
+        ats2 = callPackage ./ats2 {};
+      };
+    };
+  };
 in pkgs.stdenv.mkDerivation rec {
   name = "ats-env";
   buildInputs = with pkgs; [
-    ats
+    ats2
 
     # Other packages
     pkgconfig
